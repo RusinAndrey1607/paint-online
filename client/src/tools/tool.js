@@ -15,4 +15,7 @@ export default class Tool {
   set strokeColor(color) {
     this.ctx.strokeStyle = color;
   }
+  set lineWidth(width) {
+    this.ctx.lineWidth = width
+  }
 }

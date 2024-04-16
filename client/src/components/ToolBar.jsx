@@ -15,7 +15,12 @@ export default function ToolBar() {
     toolState.setStrokeColor(e.target.value);
   };
 
- 
+ const udnoChange = () =>{
+  canvasState.undo()
+ }
+ const redoChange = () =>{
+  canvasState.redo()
+ }
   return (
     <div className="toolbar">
       <button
@@ -43,9 +48,8 @@ export default function ToolBar() {
         type="color"
         className="toolbar__input"
       />
-      <button className="toolbar__btn undo"></button>
-      <button className="toolbar__btn redo"></button>
-      <button className="toolbar__btn redo"></button>
+      <button className="toolbar__btn undo" onClick={udnoChange}></button>
+      <button className="toolbar__btn redo" onClick={redoChange}></button>
       <button className="toolbar__btn save"></button>
     </div>
   );
