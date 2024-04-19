@@ -4,6 +4,7 @@ class CanvasState {
   canvas = null;
   undoList = [];
   redoList = [];
+  username = ''
   constructor() {
     makeAutoObservable(this);
   }
@@ -16,6 +17,10 @@ class CanvasState {
   }
   pushToRedo(data) {
     this.redoList.push(data);
+  }
+
+  setUsername(username){
+    this.username = username
   }
 
   undo() {
