@@ -10,7 +10,6 @@ import Eraser from "../tools/Eraser";
 
 export default function ToolBar() {
   const changeFillColor = (e) => {
-    console.log(e.target.value);
     toolState.setFillColor(e.target.value);
     toolState.setStrokeColor(e.target.value);
   };
