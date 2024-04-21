@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/toolbar.scss";
 import canvasState from "../store/canvasState";
 import toolState from "../store/toolState";
@@ -14,33 +14,73 @@ export default function ToolBar() {
     toolState.setStrokeColor(e.target.value);
   };
 
- const udnoChange = () =>{
-  canvasState.undo()
- }
- const redoChange = () =>{
-  canvasState.redo()
- }
+  const udnoChange = () => {
+    canvasState.undo();
+  };
+  const redoChange = () => {
+    canvasState.redo();
+  };
   return (
     <div className="toolbar">
       <button
         className="toolbar__btn brush"
-        onClick={() => toolState.setTool(new Brush(canvasState.canvas))}
+        onClick={() =>
+          toolState.setTool(
+            new Brush(
+              canvasState.canvas,
+              canvasState.socket,
+              canvasState.sessionId
+            )
+          )
+        }
       ></button>
       <button
         className="toolbar__btn rect"
-        onClick={() => toolState.setTool(new Rect(canvasState.canvas))}
+        onClick={() =>
+          toolState.setTool(
+            new Rect(
+              canvasState.canvas,
+              canvasState.socket,
+              canvasState.sessionId
+            )
+          )
+        }
       ></button>
       <button
         className="toolbar__btn circle"
-        onClick={() => toolState.setTool(new Circle(canvasState.canvas))}
+        onClick={() =>
+          toolState.setTool(
+            new Circle(
+              canvasState.canvas,
+              canvasState.socket,
+              canvasState.sessionId
+            )
+          )
+        }
       ></button>
       <button
         className="toolbar__btn eraser"
-        onClick={() => toolState.setTool(new Eraser(canvasState.canvas))}
+        onClick={() =>
+          toolState.setTool(
+            new Eraser(
+              canvasState.canvas,
+              canvasState.socket,
+              canvasState.sessionId
+            )
+          )
+        }
       ></button>
       <button
         className="toolbar__btn line"
-        onClick={() => toolState.setTool(new Line(canvasState.canvas))}
+        onClick={() =>
+          toolState.setTool(
+            new Line(
+              canvasState.canvas,
+              canvasState.socket,
+              canvasState.sessionId
+            )
+          )
+        }
       ></button>
       <input
         onChange={(e) => changeFillColor(e)}

@@ -1,7 +1,7 @@
 import Tool from "./tool";
 
 export default class Line extends Tool {
-  constructor(canvas) {
+  constructor(canvas, socket, id) {
     super(canvas);
     this.listen();
   }

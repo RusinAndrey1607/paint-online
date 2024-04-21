@@ -1,8 +1,8 @@
 import Tool from "./tool";
 
 export default class Eraser extends Tool {
-  constructor(canvas) {
-    super(canvas);
+  constructor(canvas, socket, id) {
+    super(canvas, socket, id);
     this.listen();
     this.initialCompositeOperation = this.ctx.globalCompositeOperation
   }

@@ -7,6 +7,8 @@ import Brush from "../tools/Brush";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
+import Rect from "../tools/Rect";
+import Circle from "../tools/Circle";
 
 const Canvas = observer(() => {
   const canvasRef = useRef();
@@ -55,10 +57,32 @@ const Canvas = observer(() => {
     switch (figure.type) {
       case "brush":
         Brush.draw(ctx, figure.x, figure.y);
-        break
+        break;
+      case "rect":
+        Rect.staticDraw(
+          ctx,
+          figure.x,
+          figure.y,
+          figure.width,
+          figure.height,
+          figure.color,
+          figure.strokeColor,
+          figure.strokeWidth
+        );
+      case "circle":
+        Circle.staticDraw(
+          ctx,
+          figure.x,
+          figure.y,
+          figure.radius,
+          figure.color,
+          figure.strokeColor,
+          figure.strokeWidth
+        );
+        break;
       case "finish":
-        ctx.beginPath()
-        break
+        ctx.beginPath();
+        break;
     }
   };
   const mouseDownHandle = () => {

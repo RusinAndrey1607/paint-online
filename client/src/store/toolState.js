@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 class ToolState {
   tool = null;
   color;
+  
   constructor() {
     makeAutoObservable(this);
   }
