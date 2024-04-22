@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import { useParams } from "react-router-dom";
 import Rect from "../tools/Rect";
 import Circle from "../tools/Circle";
+import Line from "../tools/Line";
 
 const Canvas = observer(() => {
   const canvasRef = useRef();
@@ -68,7 +69,7 @@ const Canvas = observer(() => {
           figure.color,
           figure.strokeColor,
           figure.strokeWidth
-        );
+        );   
       case "circle":
         Circle.staticDraw(
           ctx,
@@ -76,6 +77,18 @@ const Canvas = observer(() => {
           figure.y,
           figure.radius,
           figure.color,
+          figure.strokeColor,
+          figure.strokeWidth
+        );
+        break;
+      case "line":
+        
+        Line.staticDraw(
+          ctx,
+          figure.x,
+          figure.y,
+          figure.endX,
+          figure.endY,
           figure.strokeColor,
           figure.strokeWidth
         );

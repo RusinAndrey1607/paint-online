@@ -2,8 +2,9 @@ import { makeAutoObservable } from "mobx";
 
 class ToolState {
   tool = null;
-  color;
-  
+  color = "#000";
+  strokeColor = "#000";
+  lineWidth = 1
   constructor() {
     makeAutoObservable(this);
   }
@@ -16,9 +17,11 @@ class ToolState {
   }
   setStrokeColor(color) {
     this.tool.strokeColor = color;
+    this.strokeColor = color;
   }
   setLineWidth(width){
     this.tool.lineWidth = width
+    this.lineWidth = width
   }
 }
 export default new ToolState();
