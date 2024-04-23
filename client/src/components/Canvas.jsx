@@ -10,6 +10,8 @@ import { useParams } from "react-router-dom";
 import Rect from "../tools/Rect";
 import Circle from "../tools/Circle";
 import Line from "../tools/Line";
+import Eraser from "../tools/Eraser";
+import axios from 'axios'
 
 const Canvas = observer(() => {
   const canvasRef = useRef();
@@ -17,8 +19,17 @@ const Canvas = observer(() => {
   const [modal, setModal] = useState(true);
   const params = useParams();
   useEffect(() => {
-    console.log(canvasRef.current);
     canvasState.setCanvas(canvasRef.current);
+    let ctx = canvasRef.current.getContext('2d')
+
+    axios.get(`http://localhost:5000/image?id=${params.id}`).then(res =>{
+      const img = new Image();
+      img.src = res.data;
+      img.onload = () => {
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
+        };
+    })
   }, []);
 
   useEffect(() => {
@@ -58,6 +69,9 @@ const Canvas = observer(() => {
     switch (figure.type) {
       case "brush":
         Brush.draw(ctx, figure.x, figure.y);
+        break;
+      case "erase":
+        Eraser.draw(ctx, figure.x, figure.y);
         break;
       case "rect":
         Rect.staticDraw(
@@ -101,6 +115,9 @@ const Canvas = observer(() => {
   const mouseDownHandle = () => {
     canvasState.pushToUndo(canvasRef.current.toDataURL());
   };
+  const mouseUpHandle = () => {
+    axios.post(`http://localhost:5000/image?id=${params.id}`,{img:canvasRef.current.toDataURL()}).then(res =>console.log(res))
+  };
 
   const connectionHandler = () => {
     canvasState.setUsername(usernameRef.current.value);
@@ -123,6 +140,7 @@ const Canvas = observer(() => {
       </Modal>
       <canvas
         onMouseDown={() => mouseDownHandle()}
+        onMouseUp={() => mouseUpHandle()}
         ref={canvasRef}
         width={600}
         height={400}

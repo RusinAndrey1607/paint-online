@@ -19,6 +19,16 @@ export default function ToolBar() {
   const redoChange = () => {
     canvasState.redo();
   };
+  const download = () =>{
+    const dataURL = canvasState.canvas.toDataURL()
+    console.log(dataURL);
+    const a  = document.createElement("a")
+    a.href = dataURL
+    a.download = canvasState.sessionId + '.jpg'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
   return (
     <div className="toolbar">
       <button
@@ -88,7 +98,7 @@ export default function ToolBar() {
       />
       <button className="toolbar__btn undo" onClick={udnoChange}></button>
       <button className="toolbar__btn redo" onClick={redoChange}></button>
-      <button className="toolbar__btn save"></button>
+      <button className="toolbar__btn save" onClick={download}></button>
     </div>
   );
 }

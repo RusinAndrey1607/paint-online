@@ -4,7 +4,7 @@ export default class Eraser extends Tool {
   constructor(canvas, socket, id) {
     super(canvas, socket, id);
     this.listen();
-    this.initialCompositeOperation = this.ctx.globalCompositeOperation
+    this.initialColor = this.ctx.strokeStyle
   }
 
   listen() {
@@ -15,27 +15,39 @@ export default class Eraser extends Tool {
 
   mouseUpHandler(e) {
     this.mouseDown = false;
-    this.restoreCompositeOperation();
-
+    this.restoreInitialColor()
   }
 
   mouseDownHandler(e) {
     this.mouseDown = true;
-    this.ctx.globalCompositeOperation = 'destination-out';
-    this.ctx.lineWidth = 20;
+    this.ctx.strokeStyle = "#ffffff";
+    this.ctx.lineWidth = 20; 
     this.ctx.beginPath();
     this.ctx.moveTo(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
   }
 
   mouseMoveHandler(e) {
     if (this.mouseDown) {
-      let x = e.pageX - e.target.offsetLeft;
-      let y = e.pageY - e.target.offsetTop;
-      this.ctx.lineTo(x, y);
-      this.ctx.stroke();
+      this.socket.send(
+        JSON.stringify({
+          method: "draw",
+          id: this.id,
+          figure: {
+            type: "erase",
+            x: e.pageX - e.target.offsetLeft,
+            y: e.pageY - e.target.offsetTop,
+          },
+        })
+      );
     }
   }
-  restoreCompositeOperation() {
-    this.ctx.globalCompositeOperation = this.initialCompositeOperation; 
+  static draw(ctx,x, y) {
+    ctx.lineWidth = 20; 
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
+  restoreInitialColor() {
+    this.ctx.strokeStyle = this.initialColor; 
   }
 }
